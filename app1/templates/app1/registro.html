@@ -1,0 +1,81 @@
+{% extends "app1/base.html" %}
+
+
+{% block content %}
+<h1 class="site-heading alert alert-dark text-center text-black d-none d-lg-block p-3 mb-0">
+    <i class="fa fa-file-text" aria-hidden="true"></i>      
+    <span class="site-heading-lower text-muted">Regístrate</span>        
+</h1> 
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger alert-dismissable fade show text-center" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+        <span>&times;</span>
+    </button> 
+    <strong>Mensaje: </strong>{{message}}
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="alert alert-info mt-3 d-flex p-5 justify-content-center">
+    <div class="car car-body">
+        <form action="{{registro}}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="nombres" placeholder="Nombres" value="{{fregistro.nombres}}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="apellidos" placeholder="Apellidos" value="{{fregistro.apellidos}}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="documento" placeholder="Documento" value="{{fregistro.documento}}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <input type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" value="{{fregistro.fecha_nacimiento}}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="telefono" placeholder="Teléfono" value="{{fregistro.telefono}}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Correo electrónico" value="{{fregistro.email}}" class="form-control"required>
+            </div>  
+  
+            
+            <!-- Aquí para llenar la tabla hobbies -->
+
+            <tr><th><label>Hobbies:</label></th><td><ul id="id_hobbies" style="list-style-type: none;">
+            <li><label for="id_hobbies_0"><input type="checkbox" name="hobbies" value="escuchar música" id="id_hobbies_0">
+             Escuchar música</label>
+            
+            </li>
+
+            <li><label for="id_hobbies_1"><input type="checkbox" name="hobbies" value="leer" id="id_hobbies_1">
+             Leer</label>
+            
+            </li>
+
+            <li><label for="id_hobbies_2"><input type="checkbox" name="hobbies" value="escribir" id="id_hobbies_2">
+             Escribir</label>
+            
+            </li>
+            <li><label for="id_hobbies_3"><input type="checkbox" name="hobbies" value="pintar" id="id_hobbies_3">
+                Pintar</label>
+               
+            </li>          
+            
+            
+
+            <div class="form-group justify-content-center">
+                <button type="submit" class="btn btn-success btn-block">
+                    Guardar
+                </button>                
+            </div>
+            <br>
+            <br>
+            
+        </form>
+    </div>
+</div>
+
+{% endblock %}

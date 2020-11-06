@@ -1,0 +1,56 @@
+{% extends "app1/base.html" %}
+
+{% block content %}
+    
+<p>Gracias, ha ingresado el nombre: {{bdnombre}}</p>
+<p>Total de veces que aparece "{{bdnombre}}": {{contnombre}}</p>
+
+
+<p>Total de registros: {{total_nombres}}</p>
+
+
+<h3>Nombres Guardados:</h3>
+
+<div class="alert alert-dark" style="height: 320px;">  
+
+    <div class="d-inline-block alert alert-success float-left w-25 text-center py-3 h-100">
+        <table class="row d-flex justify-content-center">
+        {% for item in nombres %}
+        {% if forloop.counter <= 10 %}    
+            <tr class="text-center"> 
+                <td>{{ forloop.counter }}.  </td>
+                <td> {{ item.nombre }}</td>     
+            </tr>
+        {% endif %}
+        {% endfor %}
+        </table>
+    </div>
+        
+    <div class="d-inline-block alert alert-primary w-25 text-center py-3 h-100" style="left: 12.5%;right: 17.5%;">
+        <table class="row d-flex justify-content-center">
+        {% for item in nombres %}
+        {% if forloop.counter > 10 and forloop.counter <= 20 %}    
+            <tr> 
+                <td>{{ forloop.counter }}.  </td>
+                <td> {{ item.nombre }}</td>     
+            </tr>
+        {% endif %}
+        {% endfor %}
+        </table>
+    </div>
+        
+    <div class="d-inline-block alert alert-info float-right w-25 py-3 h-100">
+            <table class="row d-flex justify-content-center">
+            {% for item in nombres %}
+            {% if forloop.counter > 20 and forloop.counter <= 30 %}    
+                <tr> 
+                    <td>{{ forloop.counter }}. </td>
+                    <td> {{ item.nombre }}</td>     
+                </tr>
+            {% endif %}
+            {% endfor %}
+            </table>
+    </div>
+</div>
+
+{% endblock %}

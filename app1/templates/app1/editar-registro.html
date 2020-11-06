@@ -1,0 +1,77 @@
+{% extends "app1/base.html" %}
+{% block content %}
+
+<div class="alert alert-info mt-3 d-flex p-5 justify-content-center">
+    <div class="car car-body">
+        <form action="{{editarRegistro}}">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="nombres" placeholder="Nombres" value="{{formu.nombres}}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="apellidos" placeholder="Apellidos" value="{{formu.apellidos}}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="documento" placeholder="Documento" value="{{formu.documento}}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <input type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" value="{{formu.fecha_nacimiento}}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="telefono" placeholder="Teléfono" value="{{formu.telefono}}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Correo electrónico" value="{{formu.email}}" class="form-control"required>
+            </div>  
+  
+            {% if persona.hobbies.0 == True %} {{id_hobbies_0 = True {% endif %}
+            <!-- Aquí para llenar la tabla hobbies -->
+
+            <tr><th><label>Hobbies:</label></th><td><ul id="id_hobbies" style="list-style-type: none;">
+            <li>
+                {% if "escuchar música" in persona.hobbies %} <!-- mirar no por indice sino solo si existe en la lista -->
+                <label for="id_hobbies_0"><input type="checkbox" name="hobbies" value="escuchar música" id="id_hobbies_0" checked>Escuchar música</label>
+                {% else %}
+                <label for="id_hobbies_0"><input type="checkbox" name="hobbies" value="escuchar música" id="id_hobbies_0">Escuchar música</label>
+                {% endif %}            
+            </li>
+
+            <li>
+                {% if "leer" in persona.hobbies %}
+                <label for="id_hobbies_1"><input type="checkbox" name="hobbies" value="leer" id="id_hobbies_1" checked>Leer</label>
+                {% else %}
+                <label for="id_hobbies_1"><input type="checkbox" name="hobbies" value="leer" id="id_hobbies_1">Leer</label>
+                {% endif %}            
+            </li>
+
+            <li>
+                {% if "escribir" in persona.hobbies %}
+                <label for="id_hobbies_2"><input type="checkbox" name="hobbies" value="escribir" id="id_hobbies_2" checked>Escribir</label>
+                {% else %}
+                <label for="id_hobbies_2"><input type="checkbox" name="hobbies" value="escribir" id="id_hobbies_2">Escribir</label>
+                {% endif %}
+            
+            </li>
+            <li>
+                {% if "pintar" in persona.hobbies %}
+                <label for="id_hobbies_3"><input type="checkbox" name="hobbies" value="pintar" id="id_hobbies_3" checked>Pintar</label>
+                {% else %}
+                <label for="id_hobbies_3"><input type="checkbox" name="hobbies" value="pintar" id="id_hobbies_3">Pintar</label>
+                {% endif %}               
+            </li>          
+            </ul>
+            
+
+            <div class="form-group justify-content-center">
+                <button type="submit" class="btn btn-success btn-block">
+                    Guardar
+                </button>                
+            </div>
+            <br>
+            <br>
+            
+        </form>
+    </div>
+</div>
+
+{% endblock %}

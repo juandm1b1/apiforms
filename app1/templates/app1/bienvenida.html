@@ -1,0 +1,15 @@
+{% extends "app1/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1 class="site-heading alert alert-dark text-center text-black d-none d-lg-block p-3 mb-0">
+    <i class="fa fa-file-text" aria-hidden="true"></i>      
+    <span class="site-heading-lower text-muted">Bienvenido(a) a <i><b>Nombres App</b></i></span>        
+</h1> 
+
+<div class="container bg-dark p-5">
+    <img src="{% static 'app1/img/space.gif' %}" alt="" class="mx-auto d-block">
+</div>
+
+{% endblock %}

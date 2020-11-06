@@ -1,0 +1,59 @@
+{% extends "app1/base.html" %}
+
+{% block content %}
+
+<div style="background-color:aqua;">
+<h2>Su mensaje "{{formulario.asunto}}" ha sido enviado con éxito.</h2>
+
+
+
+
+<table style="background-color: rgb(106, 145, 39);">
+
+<caption><h2>Lista de registros</h2></caption>
+
+    <th>Número Correo</th>
+    <th>Asunto</th>
+    <th>Mensaje</th>
+    <th>Remitente</th>
+    <th>¿Con Copia?</th>
+
+{% for registro in bdregistros %}
+
+    <tr>
+        
+        <td><strong>{{registro.id}}</strong></td>
+        <td>{{registro.asunto}}</td>
+        <td>{{registro.mensaje}}</td>
+        <td>{{registro.remitente}}</td>
+        <td>{{registro.cc_myself}}</td>
+        
+    </tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}
+
+
+<!-- <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>   
+    </tbody>
+  </table> -->
