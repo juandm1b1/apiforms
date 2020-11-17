@@ -1,4 +1,5 @@
 {% extends "app1/base.html" %}
+
 {% load static %}
 
 {% block content %}
@@ -11,5 +12,120 @@
 <div class="container bg-dark p-5">
     <img src="{% static 'app1/img/space.gif' %}" alt="" class="mx-auto d-block">
 </div>
+
+<div>
+    <h4>{% now "l, d F Y. H:i:s" %}.  <span>  <br> Zona horaria: </span>  {% now  "e" %}</h4><br> 
+    <h3>Día, Semana y Mes del año: {% now " z - W - m" %}</h3>
+
+    {% with j=lista.0 %}
+    {{j|json_script:"este_id"}}
+    {{j}}
+    {% endwith %}
+    <br>
+
+    <button class="btn btn-success" id="este_btn" >Este botón muesta un json_script desde Python</button> <br> <br>
+    
+    {{fecha|time:"TIME_FORMAT"}} <br>
+    
+    {% with l=lista|last %}
+    <h5>elementos "lista":</h5>
+    
+    {{lista|unordered_list|linenumbers}} <br>
+   
+    {{l|make_list}} <br>
+    {{telefono|phone2numeric}} <br>
+    {{telefono|truncatechars:"10"}} <br>
+    {{telefono|random}} <br>
+    {{telefono|slice:"0:4"}} <br>   
+    
+    
+    <strong> La {{l.animal}} es el animal del último diccionario en la lista, y es un animal {{l.categoria}}</strong>
+     <br>
+    Cantidad de elementos en la lista "cities": {{cities|length|linebreaks}}
+
+    ¿ La cantidad de elementos en la lista "cities" es 5?: {{cities|length_is:"5"|yesno:"sí, no"|linebreaks}}
+
+    Cantidad de elementos en el último diccionario de la lista "lista": {{l|length|linebreaks}}
+    {% endwith %}
+
+    
+    {% with f="" %}
+    {{f|default:"<strong>nada de nada</strong>"}}
+    {% endwith %}
+    <br>
+
+
+    {% with ele=lista.0.animal %}
+    {{ele}} <br>
+    
+    {{ele|length}} <br>    
+    "{{ ele|add:"sss"|capfirst|cut:"s" }}"<br>
+    {{ total|add:"2" }} países:
+    {{ total|add:"2" }} países:
+    {{ total|add:"2" }} países:
+    {% endwith %}   
+    <br>
+
+
+    {% verbatim %}
+    {{if dying}}Still alive.{{/if}}
+    {% endverbatim %}
+    <br>
+    {% verbatim myblock %}
+    Avoid template rendering via the {% verbatim %}{% endverbatim %} block.
+    {% endverbatim myblock %}
+
+    <div style="background-color: darksalmon;">
+
+        {% templatetag opencomment %}Se supone que así se debe comentar {% templatetag closecomment%}
+        
+
+        {% regroup lista|dictsortreversed:"categoria" by categoria as iterable %}
+
+        {% for i in iterable %}
+        <p>{{i.grouper}}:</p>
+        {% for j in i.list %}
+        <p class="{% cycle 'odd' 'even' as parimpar %} {% cycle 'ani' 'cate'  as tipoanimal %}">
+            {{j.animal}}
+        </p>
+        
+        {% endfor %}
+        {% resetcycle tipoanimal %}
+        {% endfor %}
+    
+    </div>
+
+
+    {% regroup cities|dictsort:"country" by country as lista_paises %}
+
+    {% for pais in lista_paises %}
+
+    {{forloop.counter0}}
+
+    <ul> <h3>{{pais.grouper}}:</h3>
+
+        {% for i in pais.list %}         
+        
+        <li class="{% cycle 'even' 'odd' %}"> Ciudad: {{i.name}}. Población: {{i.population}}</li>
+        
+        {{forloop.counter0}}      
+        
+
+        {% endfor %}         
+        
+    </ul>
+
+    {% resetcycle %}
+    
+    {% empty %} 
+
+        <p>Ningún registro en esta lista de ciudades</p>    
+    
+    {% endfor %}
+
+  {% comment %}  {% lorem 2 p random %} {% endcomment %}
+</div>
+
+
 
 {% endblock %}

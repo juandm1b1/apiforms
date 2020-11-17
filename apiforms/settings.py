@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app1',
+    'multiselectfield',
 ]
 
 MIDDLEWARE = [
@@ -47,7 +48,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',    
 ]
 
 ROOT_URLCONF = 'apiforms.urls'
@@ -132,3 +133,7 @@ EMAIL_USE_TLS=True           #Gmail viene por defecto para impedir el uso de pro
 EMAIL_PORT=587               #hay que ir a la Configuración de Gmail para desactivar esa opci+on de seguridad
 EMAIL_HOST_USER="juandm1b1@gmail.com"
 EMAIL_HOST_PASSWORD="M@rtinAmbar54321"
+
+
+# A ver si funciona llenar el campo fecha_nacimiento desde la BD
+#DATE_INPUT_FORMATS = ['%d-%m-%Y']

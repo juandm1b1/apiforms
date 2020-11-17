@@ -3,25 +3,25 @@
 
 <div class="alert alert-info mt-3 d-flex p-5 justify-content-center">
     <div class="car car-body">
-        <form action="{{editarRegistro}}">
+        <form action="{{editarRegistro}}" method="POST">
             {% csrf_token %}
             <div class="form-group">
-                <input type="text" name="nombres" placeholder="Nombres" value="{{formu.nombres}}" class="form-control" required>
+                <input type="text" name="nombres" placeholder="Nombres" value="{{formu.nombres.value}}" class="form-control" required>
             </div>
             <div class="form-group">
-                <input type="text" name="apellidos" placeholder="Apellidos" value="{{formu.apellidos}}" class="form-control" required>
+                <input type="text" name="apellidos" placeholder="Apellidos" value="{{formu.apellidos.value}}" class="form-control" required>
             </div>
             <div class="form-group">
-                <input type="text" name="documento" placeholder="Documento" value="{{formu.documento}}" class="form-control" required>
+                <input type="text" name="documento" placeholder="Documento" value="{{formu.documento.value}}" class="form-control" required>
             </div>
             <div class="form-group">
-                <input type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" value="{{formu.fecha_nacimiento}}" class="form-control" required>
+                <input type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" value="{{va}}" class="form-control" required>
             </div>
             <div class="form-group">
-                <input type="text" name="telefono" placeholder="Teléfono" value="{{formu.telefono}}" class="form-control" required>
+                <input type="text" name="telefono" placeholder="Teléfono" value="{{formu.telefono.value}}" class="form-control" required>
             </div>
             <div class="form-group">
-                <input type="email" name="email" placeholder="Correo electrónico" value="{{formu.email}}" class="form-control"required>
+                <input type="email" name="email" placeholder="Correo electrónico" value="{{formu.email.value}}" class="form-control"required>
             </div>  
   
             {% if persona.hobbies.0 == True %} {{id_hobbies_0 = True {% endif %}

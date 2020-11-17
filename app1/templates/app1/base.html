@@ -9,7 +9,24 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-    
+    <style>
+        .odd {
+            color: darkgoldenrod;
+            font-weight: 700;
+        }
+        .even {
+            color: darkgreen;
+            font-weight: 700;
+        }
+        .cate {
+            background-color: dimgray;
+            font-weight: 700;
+        }
+        .ani {
+            background-color: dodgerblue;
+            font-weight: 400;
+        }
+    </style>
 
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
        
@@ -21,7 +38,7 @@
     <nav class="navbar navbar-expand-md bg-dark">
         <div class="container">
             <i class="fa fa-cogs fa-2x" aria-hidden="true" style="color: whitesmoke;"></i>
-            <a href="{% url '' %}" class="navbar-brand text-white p-2">
+            <a href="{% url 'bienvenida' %}" class="navbar-brand text-white p-2">
                 Nombres App
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#secondNavbar">
@@ -29,8 +46,8 @@
             </button>
             <div class="collapse navbar-collapse" id="secondNavbar">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'registro' %}">Regístrese</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'login' %}">Ingresar</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'crearRegistro' %}">Regístrese</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'verRegistros' %}">Ingresar</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="#">About</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="#">Contact</a></li>           
                 </ul>                

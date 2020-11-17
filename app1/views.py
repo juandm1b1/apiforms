@@ -5,7 +5,7 @@ from django.contrib.messages import get_messages
 from django.contrib.auth import authenticate
 #from django.contrib.auth.views import login, logout_then_login #Para traer login y logout por defecto
 
-from .forms import Form_nombre, ContactForm, PersonaForm, LoginForm
+from .forms import Form_nombre, ContactForm, PersonaForm
 from .models import Nombre, Contacto, Persona, Login
 
 
@@ -13,19 +13,42 @@ from django.core.mail import send_mail
 
 
 def bienvenida(request):
+
+    cities = [
+    {'name': 'Mumbai', 'population': '19,000,000', 'country': 'India'},
+    {'name': 'New York', 'population': '20,000,000', 'country': 'USA'},
+    {'name': 'Calcutta', 'population': '15,000,000', 'country': 'India'},
+    {'name': 'Chicago', 'population': '7,000,000', 'country': 'USA'},
+    {'name': 'Tokyo', 'population': '33,000,000', 'country': 'Japan'},
+]
+
+    lista = [
+        {'animal':'perro', 'categoria': 'doméstico'}, 
+        {'animal': 'gato', 'categoria': 'doméstico'}, 
+        {'animal': 'ballena', 'categoria': 'silvestre'},
+        {'animal': 'lobo', 'categoria': 'silvestre'},
+        {'animal': 'águila', 'categoria': 'silvestre'},
+        {'animal': 'gallina', 'categoria': 'doméstico'},
+        ]
+
+    telefono = "abcdefghijklmnñopqrstuvwxyz"
+    fecha = "01:23"
         
-    return render(request, "app1/bienvenida.html")
+    return render(request, "app1/bienvenida.html", {'cities': cities, 'lista': lista, 'telefono': telefono, 'fecha': fecha})
 
 
 class FormularioRegistroView(HttpResponse):
 
+    def verRegistros(request):
+        registros = Persona.objects.all()
+        return render(request, "app1/lista_registros.html", {'registros': registros})
 
-    def registro(request):
+
+    def crearRegistro(request):
 
         if request.method == "POST":
             
-            fregistro = PersonaForm(request.POST) #Se intancia form RegistroForm
-            #countr = 0
+            fregistro = PersonaForm(request.POST) #Se intancia form RegistroForm            
 
             if fregistro.is_valid():
 
@@ -41,7 +64,7 @@ class FormularioRegistroView(HttpResponse):
                     lista_hobbies.append(hobbi)            
                         
 
-                #Se instancia model Registro
+                #Se instancia model Persona
                 bdRegistro = Persona(nombres=infRegistro['nombres'], apellidos=infRegistro['apellidos'], documento=infRegistro['documento'],
                         fecha_nacimiento=infRegistro['fecha_nacimiento'],telefono=infRegistro['telefono'],email=infRegistro['email'],hobbies=lista_hobbies)            
                 
@@ -70,9 +93,8 @@ class FormularioRegistroView(HttpResponse):
 
         else:
 
-            fregistro = PersonaForm()  
-            
-            #messages.info(request, "El formulario no es válido" ) 
+            fregistro = PersonaForm()            
+             
 
         return render(request, 'app1/registro.html')
 
@@ -87,45 +109,48 @@ class FormularioRegistroView(HttpResponse):
         return render(request, 'app1/lista_registros.html', ctx)
 
 
+
     def editarRegistro(request, id_persona):
         
-        persona = Persona.objects.get(pk=id_persona)
-            # dicc = {'nombres': persona.nombres, 'apellidos': persona.apellidos, 'documento': persona.documento,
-            #         'fecha_nacimiento': persona.fecha_nacimiento, 'telefono': persona.telefono, 'email': persona.email, 'hobbies': persona.hobbies}
-            
-            #dicc2 = {'nombres': 'Josele', 'apellidos': 'Camelot'}
+        reg_a_editar = Persona.objects.get(pk=id_persona)
+        #return HttpResponse(reg_a_editar.telefono)
+        formu = PersonaForm(instance=reg_a_editar)
 
-        formu = PersonaForm(instance=persona)
-            # formu = form()
-            # form.nombres = dicc['nombres']
-            # form.apellidos = dicc['apellidos']
-            # form.documento = dicc['documento']
-            # form.fecha_nacimiento = dicc['fecha_nacimiento']
-            # form.telefono = dicc['telefono']
-            # form.email = dicc['email']
+        if request.method == "POST":
+            form2 = PersonaForm(request.POST, instance = reg_a_editar)
 
-            #formu = form.cleaned_data
+            if form2.is_valid():
 
-        return HttpResponse(formu)
+                form2.save()
 
+                # infRegistro = form2.cleaned_data #Si form es válido se obtienen datos limpios          
 
-        # ctx = {'formu': formu, 'persona': persona}
-        # return render(request, "app1/editar-registro.html", ctx)
+                # lista_hobbies=[]
+                
+
+                # hobbis=infRegistro['hobbies']
 
 
-        # if request.method == 'GET':
-        #     reg_a_editar = Persona.objects.get(pk=id_persona)
+                # for hobbi in hobbis:
+                #     lista_hobbies.append(hobbi)            
+                        
 
-        #     #fecha = p.fecha_nacimiento
-        #     dia = reg_a_editar.fecha_nacimiento.day.__str__()
-        #     mes = reg_a_editar.fecha_nacimiento.month.__str__()
-        #     anio = reg_a_editar.fecha_nacimiento.year.__str__()
-        #     fecha2 = dia + mes + anio
-        #     #fecha2 = dia + "/" + mes + "/" + "/" + anio
-        #     #return HttpResponse(fecha2)        
-            
-        #     ctx = {"reg_a_editar": reg_a_editar, 'fecha2': fecha2, "dia": dia, "mes": mes, "anio": anio}
-        #     return render(request, "app1/editar-registro.html", ctx)
+                # #Se instancia model Persona
+                # bdRegistro = reg_a_editar(nombres=infRegistro['nombres'], apellidos=infRegistro['apellidos'], documento=infRegistro['documento'],
+                #         fecha_nacimiento=infRegistro['fecha_nacimiento'],telefono=infRegistro['telefono'],email=infRegistro['email'],hobbies=lista_hobbies)
+
+                
+                # bdRegistro.save()
+
+                registros = Persona.objects.all()
+
+                ctx = {'registros': registros}
+
+                return render(request, "app1/lista_registros.html", ctx)
+
+
+        ctx = {'formu': formu, 'reg_a_editar': reg_a_editar}
+        return render(request, "app1/experimento.html", ctx)
 
 
 
@@ -154,6 +179,7 @@ class FormularioRegistroView(HttpResponse):
 #     else:
 #         fLogin = LoginForm()
 
+
 #     return render(request, 'app1/login.html')    
 
 
@@ -161,71 +187,71 @@ class FormularioRegistroView(HttpResponse):
 
 
 
-def Form_contacto(request):
+# def Form_contacto(request):
 
-    if request.method == "POST":
+#     if request.method == "POST":
 
-        form = ContactForm(request.POST) 
+#         form = ContactForm(request.POST) 
 
-        if form.is_valid():
-            formulario = form.cleaned_data
-            asunto = form.cleaned_data['asunto']
-            mensaje = form.cleaned_data['mensaje']
-            remitente = form.cleaned_data['remitente']            
-            cc_myself = form.cleaned_data['cc_myself']
+#         if form.is_valid():
+#             formulario = form.cleaned_data
+#             asunto = form.cleaned_data['asunto']
+#             mensaje = form.cleaned_data['mensaje']
+#             remitente = form.cleaned_data['remitente']            
+#             cc_myself = form.cleaned_data['cc_myself']
             
 
-            bdcontacto = Contacto(asunto=asunto, mensaje=mensaje, remitente=remitente, cc_myself=cc_myself)
+#             bdcontacto = Contacto(asunto=asunto, mensaje=mensaje, remitente=remitente, cc_myself=cc_myself)
 
-            bdcontacto.save()   
+#             bdcontacto.save()   
 
-        destinatario = ["soundgar@yahoo.es"]
+#         destinatario = ["soundgar@yahoo.es"]
 
-        if cc_myself:
-            destinatario.append(remitente)
-            send_mail(asunto, mensaje, remitente, destinatario)
+#         if cc_myself:
+#             destinatario.append(remitente)
+#             send_mail(asunto, mensaje, remitente, destinatario)
 
         
 
-        bdregistros = Contacto.objects.all()
+#         bdregistros = Contacto.objects.all()
 
-        return render(request, "app1/contactos.html", {"formulario": formulario, "bdregistros": bdregistros})
+#         return render(request, "app1/contactos.html", {"formulario": formulario, "bdregistros": bdregistros})
 
-    else:
+#     else:
         
-        form = ContactForm()
+#         form = ContactForm()
         
 
-    return render(request, "app1/form_contacto.html", {"form": form})
+#     return render(request, "app1/form_contacto.html", {"form": form})
 
 
 
-def nombre(request):
+# def nombre(request):
 
-    if request.method == "POST":
+#     if request.method == "POST":
         
-        fnombre = Form_nombre(request.POST)
+#         fnombre = Form_nombre(request.POST)
 
-        if fnombre.is_valid():
+#         if fnombre.is_valid():
 
-            inffnombre = fnombre.cleaned_data            
+#             inffnombre = fnombre.cleaned_data            
 
-            bdnombre = Nombre(nombre=inffnombre['nombre'])
+#             bdnombre = Nombre(nombre=inffnombre['nombre'])
 
-            bdnombre.save()
+#             bdnombre.save()
 
-            nombres = Nombre.objects.all()
+#             nombres = Nombre.objects.all()
 
-            total_nombres = nombres.count()
-            contnombre = Nombre.objects.filter(nombre=bdnombre).count()    
+#             total_nombres = nombres.count()
+#             contnombre = Nombre.objects.filter(nombre=bdnombre).count()    
 
-            ctx = {"bdnombre": bdnombre, "nombres": nombres, "total_nombres": total_nombres, "contnombre": contnombre}  
+#             ctx = {"bdnombre": bdnombre, "nombres": nombres, "total_nombres": total_nombres, "contnombre": contnombre}  
 
 
-            return render(request, 'app1/listanombres.html', ctx)           
+#             return render(request, 'app1/listanombres.html', ctx)           
 
-    else:
+#     else:
 
-        fnombre = Form_nombre()     
+#         fnombre = Form_nombre()     
 
-    return render(request, 'app1/name.html', {"fnombre": fnombre})
+#     return render(request, 'app1/name.html', {"fnombre": fnombre})

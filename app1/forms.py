@@ -2,6 +2,8 @@
 
 from django import forms
 from .models import Persona
+from django.contrib.postgres.forms import SimpleArrayField
+from multiselectfield import MultiSelectFormField
 
 class Form_nombre(forms.Form):
     nombre = forms.CharField(label='', max_length=100)
@@ -22,23 +24,18 @@ HOBBIES = [
     ('pintar','Pintar'),
     ]
 
-class PersonaForm(forms.ModelForm):
+class PersonaForm(forms.ModelForm):  
+    #fecha_nacimiento = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS)  
+    
     class Meta:
         model = Persona
-        exclude = ['hobbies']
-        widgets = {'fecha_nacimiento': forms.DateInput(attrs={'type': 'date'})}
+        #exclude = ['hobbies']
+        fields = '__all__'
+        widgets = {
+                    'hobbies': forms.CheckboxSelectMultiple(choices=HOBBIES),
+                    'fecha_nacimiento': forms.DateInput(),
+                    }
 
   # hobbies = forms.MultipleChoiceField(required=False,widget=forms.CheckboxSelectMultiple, choices=HOBBIES)
 
-
-class LoginForm(forms.Form):
-    usuario = forms.CharField(max_length=10)
-    contrasena = forms.CharField(max_length=15)
-
-
-
-"""1. arreglar urls con include o mas bien modularización
-
-
-#arreglar para que sí envíe mail
-#que no se vea el formulario en un mismo renglón"""
+  # 'fecha_nacimiento': forms.DateInput(attrs={'type': 'date'},)

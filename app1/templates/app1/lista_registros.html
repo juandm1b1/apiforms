@@ -1,5 +1,7 @@
 {% extends "app1/base.html" %}
 
+{% load static %}
+
 {% block content %}
 
 <h1 class="site-heading alert alert-dark text-center text-black d-none d-lg-block p-3 mb-0">
@@ -47,6 +49,8 @@
                     <a class="btn btn-danger eliminar" onclick="eliminarRegistro()" href="{% url 'eliminarRegistro' registro.id %}" >Eliminar</a>                    
                 </td>             
             </tr> 
+
+            
                  
         {% endfor %}
     </tbody>

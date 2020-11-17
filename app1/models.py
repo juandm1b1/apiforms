@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from multiselectfield import MultiSelectField
 
 # Create your models here.
 
@@ -24,6 +25,14 @@ class Contacto(models.Model):
         return self.asunto
 
 
+
+HOBBIES = [
+    ('escuchar música','Escuchar música'),
+    ('leer', 'Leer'),
+    ('escribir','Escribir'),
+    ('pintar','Pintar'),
+    ]
+
 class Persona(models.Model):
     nombres = models.CharField(max_length=40)
     apellidos = models.CharField(max_length=40)    
@@ -31,7 +40,8 @@ class Persona(models.Model):
     fecha_nacimiento = models.DateField()
     telefono = models.CharField(max_length=10)
     email = models.EmailField()
-    hobbies = ArrayField(models.CharField(max_length=50))    
+    hobbies = MultiSelectField(choices=HOBBIES, null= True, blank= True)
+    #hobbies = ArrayField(models.CharField(max_length=50))    
 
     def __str__(self):
         return self.nombres, self.apellidos

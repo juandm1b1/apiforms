@@ -1,0 +1,23 @@
+{% extends "app1/base.html" %}
+{% block content %}
+
+<div class="alert alert-info mt-3 d-flex p-5 justify-content-center">
+    <div class="car car-body">
+        <form action="{{editarRegistro}}" method="POST">
+            {% csrf_token %}
+
+            {{formu}}
+
+            <div class="form-group justify-content-center">
+                <button type="submit" class="btn btn-success btn-block">
+                    Guardar
+                </button>                
+            </div>      
+            
+
+        </form>
+            
+    </div>
+</div>
+
+{% endblock %}

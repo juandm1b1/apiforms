@@ -20,7 +20,7 @@
 
 <div class="alert alert-info mt-3 d-flex p-5 justify-content-center">
     <div class="car car-body">
-        <form action="{{registro}}" method="POST">
+        <form action="{{crearRegistro}}" method="POST">
             {% csrf_token %}
             <div class="form-group">
                 <input type="text" name="nombres" placeholder="Nombres" value="{{fregistro.nombres}}" class="form-control" required>
